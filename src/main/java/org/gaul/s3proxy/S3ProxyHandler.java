@@ -451,6 +451,10 @@ final class S3ProxyHandler extends AbstractHandler {
         for (String parameter : Collections.list(
                 request.getParameterNames())) {
             if (!SUPPORTED_PARAMETERS.contains(parameter)) {
+                if (ignoreUnknownHeaders) {
+                    continue;
+                }
+
                 logger.error("Unknown parameters {} with URI {}",
                         parameter, request.getRequestURI());
                 throw new S3Exception(S3ErrorCode.NOT_IMPLEMENTED);
